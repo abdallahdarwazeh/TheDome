@@ -229,12 +229,30 @@ h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.3;margin:0}
 }
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
 
-/* ── the five static-hero gates ───────────────────────────────── */
+/* ── the four device gates: scrub, against the portrait cut ─────
+   These used to sit in the same list as prefers-reduced-motion, and any
+   match dropped the whole scrub for a single still. They now mean two
+   different things. A phone gets the argument the bands carry, played
+   against a 720x1280 file whose every frame is a keyframe, so a seek
+   costs no decode walk. Motion preference is still a full stop, and it
+   is the block below.
+   The runway is half the desktop 600vh: the mobile cut is 4s to the
+   desktop 5s, and a phone reaches the bottom of a tall page sooner. */
 @media (max-width: 720px),
        (orientation: portrait) and (max-width: 1024px),
        (orientation: portrait) and (pointer: coarse),
-       (orientation: landscape) and (pointer: coarse) and (max-height: 560px),
-       (prefers-reduced-motion: reduce){
+       (orientation: landscape) and (pointer: coarse) and (max-height: 560px){
+  .hero{--hero-vh:300}
+  /* The left/right pair is a wide-screen idea. At 375px a 42vw column is
+     about nine characters, so both rails become one column. */
+  .band{inline-size:calc(100% - var(--rail) * 2)}
+  .band.r{inset-inline-start:var(--rail);inset-inline-end:auto;text-align:start}
+  .band p{font-size:clamp(1.5rem,6.4vw,2.4rem)}
+  .band::before{inset:-1.6em -2.2em}
+}
+
+/* ── reduced motion: the only fully static hero ───────────────── */
+@media (prefers-reduced-motion: reduce){
   .hero{height:100svh}
   .stage video{display:none}
   .bands,.descent,.scroll-hint{display:none}
@@ -244,15 +262,15 @@ h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.3;margin:0}
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
   .descent line{stroke-dashoffset:0 !important}
-  /* Belongs to this query alone, not to the five gates above. Those five
-     swap the scrubbing hero for a still because seeking a 5.5MB video on a
-     phone is a bad trade. That is a decision about the hero. Pinning every
-     scroll entrance on the page to its end state is a decision about motion
-     preference, and it rode along in the same block by accident, so all 29
-     entrances were dead on every phone whether or not the visitor had asked
-     for less motion. The observer still needs this as a floor here, because
-     with transitions at .001ms an element that never intersects would
-     otherwise sit at opacity 0 forever. */
+  /* Belongs to this query alone, not to the four device gates above. Those
+     four now pick which cut of the hero plays; they no longer stop it. That
+     is a decision about bandwidth. Pinning every scroll entrance on the page
+     to its end state is a decision about motion preference, and it once rode
+     along in the same block as the device gates, so all 29 entrances were
+     dead on every phone whether or not the visitor had asked for less
+     motion. The observer still needs this as a floor here, because with
+     transitions at .001ms an element that never intersects would otherwise
+     sit at opacity 0 forever. */
   .reveal{opacity:1 !important;transform:none !important}
 }
 
@@ -436,7 +454,14 @@ footer{padding:clamp(48px,7vh,80px) var(--rail);border-block-start:1px solid rgb
 <section class="hero" id="hero">
   <div class="stage">
     <picture>
-      <source srcset="../assets/hero-static.jpg" media="(max-width: 720px), (orientation: portrait) and (max-width: 1024px), (orientation: portrait) and (pointer: coarse), (orientation: landscape) and (pointer: coarse) and (max-height: 560px), (prefers-reduced-motion: reduce)">
+      <!-- First source: the four device gates, matched character for character
+           against the CSS block and DEVICE_GATES. A 720x1280 still cut from
+           the same frame as the portrait video, so the swap from poster to
+           video holds its framing instead of jumping out of a centre crop.
+           Second source: reduced motion on a wide screen, where the still is
+           the whole hero and the landscape frame is the right one. -->
+      <source srcset="../assets/hero-static-tall.jpg" media="(max-width: 720px), (orientation: portrait) and (max-width: 1024px), (orientation: portrait) and (pointer: coarse), (orientation: landscape) and (pointer: coarse) and (max-height: 560px)">
+      <source srcset="../assets/hero-static.jpg" media="(prefers-reduced-motion: reduce)">
       <img class="poster" id="poster" src="../assets/poster.jpg" alt="" decoding="async" fetchpriority="high">
     </picture>
     <video id="hero-video" muted playsinline preload="none" disablepictureinpicture aria-hidden="true"></video>
@@ -649,17 +674,26 @@ footer{padding:clamp(48px,7vh,80px) var(--rail);border-block-start:1px solid rgb
 (function(){
 "use strict";
 
-/* ── the five static-hero gates, matched character for character
-      against the CSS media query block above ─────────────────── */
-var GATES = [
+/* ── the hero gates, matched character for character against the two
+      CSS media query blocks above ──────────────────────────────
+   Four device gates pick the cut of the video. The motion-preference
+   gate is the only one that still means "no video at all", so it is
+   held separately: a phone whose owner asked for less motion has to
+   lose the scrub, not gain a smaller one. */
+var DEVICE_GATES = [
   "(max-width: 720px)",
   "(orientation: portrait) and (max-width: 1024px)",
   "(orientation: portrait) and (pointer: coarse)",
-  "(orientation: landscape) and (pointer: coarse) and (max-height: 560px)",
-  "(prefers-reduced-motion: reduce)"
+  "(orientation: landscape) and (pointer: coarse) and (max-height: 560px)"
 ];
-var mqls = GATES.map(function(q){ return window.matchMedia(q); });
-function staticHero(){ return mqls.some(function(m){ return m.matches; }); }
+var deviceMqls = DEVICE_GATES.map(function(q){ return window.matchMedia(q); }),
+    rmMql = window.matchMedia("(prefers-reduced-motion: reduce)"),
+    mqls = deviceMqls.concat([rmMql]);
+function reducedMotion(){ return rmMql.matches; }
+function mobileCut(){
+  if(reducedMotion()) return false;
+  return deviceMqls.some(function(m){ return m.matches; });
+}
 
 /* ── nav solidity ─────────────────────────────────────────────── */
 var nav = document.getElementById("nav"), navSolid = false;
@@ -819,7 +853,20 @@ document.querySelectorAll(".reveal").forEach(function(el){ io.observe(el); });
   var target = 0, shown = 0, last = 0, raf = 0,
       duration = 0, ready = false,
       seekBusy = false, pending = null,
-      lastLine = -1, loadStarted = false, blobUrl = null;
+      lastLine = -1;
+
+  /* Two cuts of the same four seconds. A device fetches the one its gates
+     ask for and never the other, so the 5.5MB landscape file is not what
+     a phone pays for. Both are keyed by URL rather than held in one
+     variable, because rotating a tablet flips the answer mid-session and
+     the wrong blob attached to the video is a silent, wrong-aspect hero. */
+  var SRC_WIDE = "../assets/hero.mp4",
+      SRC_TALL = "../assets/hero-mobile-tall.mp4",
+      blobs = {},      /* url -> object URL, kept for the session */
+      settled = {},    /* url -> true once fetched or given up on */
+      wanted = null;   /* the cut the current gates ask for */
+
+  function wantSrc(){ return mobileCut() ? SRC_TALL : SRC_WIDE; }
 
   function progress(){
     var r = hero.getBoundingClientRect(),
@@ -828,19 +875,61 @@ document.querySelectorAll(".reveal").forEach(function(el){ io.observe(el); });
     return Math.max(0, Math.min(1, -r.top / span));
   }
 
+  /* The still is the floor, never a blank stage: the poster is painted
+     from markup and the video sits transparent above it until its own
+     bytes are in hand. Nothing below can leave the hero empty. */
+  function attach(src){
+    var url = blobs[src];
+    if(!url || video.getAttribute("src") === url) return;
+    video.src = url;
+    video.load();
+  }
+
+  function detach(){
+    video.classList.remove("ready");
+    video.removeAttribute("src");
+    video.load();
+    /* dropping the source invalidates the seek gate along with it */
+    ready = false; seekBusy = false; pending = null;
+    ring.classList.remove("on");
+  }
+
   /* Blob fetch. Many static hosts answer Range requests with the whole
      file, which clamps every seek to zero. Holding the bytes locally is
-     the only reliable way to scrub. */
-  function load(){
-    if(loadStarted) return;
-    loadStarted = true;
+     the only reliable way to scrub.
+     Three seconds is the whole budget. Past that the still is what this
+     session gets, and the abort matters as much as the giving up: a
+     phone that has stopped waiting should also stop paying for bytes. */
+  var LOAD_BUDGET_MS = 3000;
 
-    fetch("../assets/hero.mp4").then(function(res){
+  function load(src){
+    if(settled[src]) return;
+    settled[src] = true;
+
+    var ctl = (typeof AbortController === "function") ? new AbortController() : null,
+        landed = false;
+
+    function giveUp(){
+      if(landed) return;
+      landed = true;
+      /* the page is complete without the video: the poster stays,
+         the bands keep running on scroll progress alone */
+      ring.classList.remove("on");
+    }
+
+    var timer = setTimeout(function(){
+      if(ctl) ctl.abort();
+      giveUp();
+    }, LOAD_BUDGET_MS);
+
+    fetch(src, ctl ? { signal: ctl.signal } : undefined).then(function(res){
       if(!res.ok) throw new Error(res.status);
       var total = parseInt(res.headers.get("content-length") || "0", 10);
       if(!res.body || !total){ return res.blob(); }
 
-      if(total > 3 * 1024 * 1024) ring.classList.add("on");
+      /* the portrait cut is about 2MB, under the old 3MB bar, so without
+         this a phone would spend its whole budget with nothing on screen */
+      if(total > 1024 * 1024) ring.classList.add("on");
 
       var reader = res.body.getReader(), chunks = [], got = 0;
       return (function pump(){
@@ -855,13 +944,17 @@ document.querySelectorAll(".reveal").forEach(function(el){ io.observe(el); });
         });
       })();
     }).then(function(blob){
-      blobUrl = URL.createObjectURL(blob);
-      video.src = blobUrl;
-      video.load();
-    }).catch(function(){
-      /* the page is complete without the video: the poster stays,
-         the bands keep running on scroll progress alone */
+      clearTimeout(timer);
+      if(landed) return;              /* the budget ran out while we read */
+      landed = true;
+      blobs[src] = URL.createObjectURL(blob);
       ring.classList.remove("on");
+      /* the gates can flip while the bytes are in flight, and the cut
+         that finishes last is not necessarily the one now on screen */
+      if(src === wanted) attach(src);
+    }).catch(function(){
+      clearTimeout(timer);
+      giveUp();
     });
   }
 
@@ -936,27 +1029,34 @@ document.querySelectorAll(".reveal").forEach(function(el){ io.observe(el); });
   function onScroll(){
     var solid = window.scrollY > window.innerHeight * 0.6;
     if(solid !== navSolid){ navSolid = solid; nav.classList.toggle("solid", solid); }
-    if(staticHero()) return;
+    if(reducedMotion()) return;
     target = progress();
-    if(!loadStarted && target >= 0) load();
     kick();
   }
 
   function apply(){
-    if(staticHero()){
+    /* the one gate that still means no video at all */
+    if(reducedMotion()){
       if(raf){ cancelAnimationFrame(raf); raf = 0; }
-      video.removeAttribute("src");
-      video.load();
-      /* dropping the source invalidates the seek gate along with it */
-      ready = false; seekBusy = false; pending = null;
-      ring.classList.remove("on");
+      wanted = null;
+      detach();
       return;
     }
-    if(!loadStarted) load();
-    /* rotating back into the scrub hero: the bytes are still in memory, so
-       reattach them. Re-running load() would be blocked by loadStarted and
-       leave the hero without a video for the rest of the session. */
-    else if(blobUrl && !video.getAttribute("src")){ video.src = blobUrl; video.load(); }
+
+    var src = wantSrc();
+    if(src !== wanted){
+      wanted = src;
+      /* Rotating a tablet changes which cut is right. Drop the old one
+         first: leaving it attached shows a landscape frame stretched down
+         a portrait stage until the other blob lands. */
+      detach();
+    }
+    /* rotating back into a cut already fetched this session: the bytes are
+       still in memory, so reattach rather than refetch. load() would be
+       blocked by settled[src] and leave the hero on the still forever. */
+    if(blobs[src]) attach(src);
+    else load(src);
+
     target = progress();
     kick();
   }
