@@ -358,11 +358,6 @@ details p{margin:0 0 1.6em;color:var(--text-secondary);max-inline-size:62ch}
 .route{background:var(--canvas);padding:clamp(22px,3vw,32px);text-decoration:none;transition:background .3s ease}
 .route:hover,.route:focus-visible{background:var(--panel)}
 .route b{display:block;font-family:var(--display);font-weight:700;font-stretch:112%;font-size:1.12rem;margin-block-start:.5em}
-.pending{
-  margin-block-start:clamp(28px,4vh,44px);padding:1.1em 1.3em;
-  border-inline-start:2px solid var(--accent);background:var(--accent-muted);
-  font-size:.9rem;color:var(--text-secondary);max-inline-size:62ch;
-}
 
 /* closer */
 #book{background:linear-gradient(160deg,var(--court-deep),var(--canvas) 70%);text-align:center}
@@ -595,6 +590,9 @@ footer{padding:clamp(48px,7vh,80px) var(--rail);border-block-start:1px solid rgb
       <a class="route reveal" href="#book">
         <span class="mono">Booking</span><b>Playtomic</b>
       </a>
+      <div class="route reveal">
+        <span class="mono">Hours</span><b>6:30 AM – 12:00 AM, daily</b>
+      </div>
     </div>
   </div>
 </section>
@@ -617,11 +615,11 @@ footer{padding:clamp(48px,7vh,80px) var(--rail);border-block-start:1px solid rgb
     </div>
     <div>
       <span class="mono">Hours</span>
-      <p>To be confirmed by the club.</p>
+      <p>6:30 AM – 12:00 AM<br>Every day</p>
     </div>
     <div>
       <span class="mono">Language</span>
-      <p><a href="/TheDome/">English</a></p>
+      <p><a href="/TheDome/" hreflang="en">English</a><br><a href="/TheDome/ar/" lang="ar" hreflang="ar" dir="rtl">العربية</a></p>
     </div>
     <div>
       <span class="mono">Follow</span>
