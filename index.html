@@ -1,0 +1,982 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Dome Padel Club | Indoor Padel in Ar-Rayyan, Qatar</title>
+<meta name="description" content="Five indoor padel courts at Qatar Foundation, Ar-Rayyan. Cooled, lit, and open every day of the year. Book by the court on Playtomic.">
+<meta name="theme-color" content="#14161A">
+
+<link rel="canonical" href="https://thedome.qa/">
+<link rel="alternate" hreflang="en" href="https://thedome.qa/">
+<link rel="alternate" hreflang="ar" href="https://thedome.qa/ar">
+<link rel="alternate" hreflang="x-default" href="https://thedome.qa/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Dome Padel Club">
+<meta property="og:title" content="The Dome Padel Club">
+<meta property="og:description" content="Five indoor padel courts at Qatar Foundation, Ar-Rayyan. Cooled, lit, and open every day of the year.">
+<meta property="og:locale" content="en">
+<meta property="og:locale:alternate" content="ar">
+<!-- DEPLOY STEP: replace both absolute URLs below with the live origin before zipping -->
+<meta property="og:url" content="https://thedome.qa/">
+<meta property="og:image" content="https://thedome.qa/assets/poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,700&family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --canvas:#14161A;
+  --panel:#1B2029;
+  --court:#1B4FA8;
+  --court-deep:#123472;
+  --accent:#C8FF00;
+  --accent-hover:#D9FF4D;
+  --accent-muted:rgba(200,255,0,.13);
+  --text-primary:#F2F0EA;
+  --text-secondary:#A8A79F;
+  --sand:#C9B79C;
+  --display:"Archivo",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --ts:0 1px 2px rgba(0,0,0,.92), 0 2px 12px rgba(0,0,0,.75), 0 0 40px rgba(0,0,0,.55);
+  --rail:clamp(20px,5vw,72px);
+  --hero-vh:600;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--canvas);color:var(--text-primary);
+  font-family:var(--body);font-size:clamp(16px,1.05vw,18px);line-height:1.6;
+  overflow-x:hidden;
+}
+img,svg,video{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);font-weight:700;font-stretch:112%;line-height:1.02;letter-spacing:-.02em;margin:0}
+.mono{font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text-secondary)}
+
+/* ── loading ring ─────────────────────────────────────────────── */
+#ring{
+  position:fixed;inset-inline-end:var(--rail);inset-block-end:var(--rail);z-index:60;
+  width:52px;height:52px;pointer-events:none;opacity:0;transition:opacity .45s ease;
+}
+#ring.on{opacity:1}
+#ring svg{transform:rotate(-90deg)}
+#ring circle{fill:none;stroke-width:2.5}
+#ring .track{stroke:rgba(242,240,234,.16)}
+#ring .fill{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset .25s linear}
+#ring b{
+  position:absolute;inset:0;display:grid;place-items:center;
+  font-family:var(--mono);font-size:.62rem;color:var(--text-primary);font-weight:400;
+}
+
+/* ── nav ──────────────────────────────────────────────────────── */
+.nav{
+  position:fixed;inset-block-start:0;inset-inline:0;z-index:50;
+  display:flex;align-items:center;gap:clamp(12px,2vw,28px);
+  padding:clamp(14px,1.6vw,22px) var(--rail);
+  background:linear-gradient(to bottom,rgba(20,22,26,.82),rgba(20,22,26,0));
+  transition:background .4s ease,backdrop-filter .4s ease;
+}
+.nav.solid{background:rgba(20,22,26,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.brand{font-family:var(--display);font-weight:700;font-stretch:112%;font-size:clamp(15px,1.25vw,19px);letter-spacing:.01em;text-decoration:none;white-space:nowrap}
+.brand span{color:var(--accent)}
+.nav ul{display:flex;gap:clamp(10px,1.5vw,24px);list-style:none;margin:0 auto;padding:0}
+.nav ul a{font-size:.82rem;text-decoration:none;color:var(--text-secondary);transition:color .25s ease}
+.nav ul a:hover,.nav ul a:focus-visible{color:var(--text-primary)}
+.nav-right{display:flex;align-items:center;gap:clamp(8px,1.2vw,16px);margin-inline-start:auto}
+.lang{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-decoration:none;
+  color:var(--text-secondary);border:1px solid rgba(242,240,234,.22);
+  padding:.42em .78em;border-radius:2px;transition:.25s ease;
+}
+.lang:hover,.lang:focus-visible{color:var(--canvas);background:var(--text-primary);border-color:var(--text-primary)}
+.cta{
+  display:inline-block;font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+  text-decoration:none;background:var(--accent);color:#0E1013;font-weight:400;
+  padding:.82em 1.5em;border-radius:2px;transition:background .25s ease,transform .25s ease;
+}
+.cta:hover,.cta:focus-visible{background:var(--accent-hover);transform:translateY(-1px)}
+.cta.ghost{background:transparent;color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.cta.ghost:hover{background:var(--accent-muted)}
+/* Two bars that cross into an X. Hidden until the nav row cannot fit. */
+.menu-btn{
+  display:none;place-content:center;gap:6px;
+  inline-size:40px;block-size:40px;padding:0;
+  border:0;background:transparent;cursor:pointer;
+}
+.menu-btn span{
+  display:block;inline-size:20px;block-size:1.5px;background:var(--text-primary);
+  transition:transform .28s ease;
+}
+.nav[data-menu="open"] .menu-btn span:first-child{transform:translateY(3.75px) rotate(45deg)}
+.nav[data-menu="open"] .menu-btn span:last-child{transform:translateY(-3.75px) rotate(-45deg)}
+
+/* Below 900px the row of section links cannot fit, so it becomes a panel
+   under the bar. It is the same <ul>, not a copy, so the Events item's
+   hidden state keeps working in both layouts from one piece of markup.
+   The bar CTA drops to "Book" because the full label leaves no room for
+   the button at 375px, and squeezing its padding instead wrapped it onto
+   a second line. The hero repeats the full label directly underneath. */
+@media (max-width:900px){
+  .nav{gap:10px}
+  .cta-long{display:none}
+  .menu-btn{display:grid}
+  /* The bar is a fading gradient by default. Left that way with the panel
+     down, the hero shows through the top strip while the panel below it
+     is solid, and the two read as separate surfaces. Same colour as the
+     panel so the open menu is one block.
+     The transition is killed because the bar inherits a .4s background fade
+     for the scroll-solidity effect, while the panel has none. Sharing that
+     timing reopens the same seam for the length of the fade, and worse: the
+     gradient is a background-image, which flips discretely, so only the flat
+     colour animates and the bar starts the fade fully see-through. */
+  .nav[data-menu="open"]{background:var(--canvas);transition:none}
+  .nav ul{
+    display:none;position:absolute;inset-block-start:100%;inset-inline:0;
+    flex-direction:column;gap:0;margin:0;
+    padding:.2rem var(--rail) 1.1rem;
+    background:var(--canvas);
+    border-block-end:1px solid rgba(242,240,234,.14);
+  }
+  .nav[data-menu="open"] ul{display:flex}
+  .nav ul a{
+    display:block;padding:.95rem 0;font-size:1.02rem;color:var(--text-primary);
+    border-block-end:1px solid rgba(242,240,234,.08);
+  }
+  .nav ul li:last-child a{border-block-end:0}
+}
+
+/* ── hero ─────────────────────────────────────────────────────── */
+.hero{position:relative;padding:0;height:calc(var(--hero-vh) * 1vh)}
+.stage{
+  position:sticky;inset-block-start:0;height:100svh;overflow:hidden;
+  background:#0B0D10;
+}
+.stage video,.stage .poster{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+}
+.stage .poster{z-index:1}
+.stage video{z-index:2;opacity:0;transition:opacity .7s ease}
+.stage video.ready{opacity:1}
+
+/* layer 1 of 4: global base scrim, always on */
+.stage::after{
+  content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
+  background:
+    linear-gradient(to bottom,rgba(11,13,16,.62) 0%,rgba(11,13,16,.16) 26%,rgba(11,13,16,.16) 68%,rgba(11,13,16,.72) 100%);
+}
+
+/* descent line */
+.descent{position:absolute;z-index:4;inset-block:0;inset-inline-start:calc(var(--rail) - 1px);width:2px;pointer-events:none;opacity:.6}
+.descent line{stroke:var(--accent);stroke-width:2;stroke-dasharray:1000;stroke-dashoffset:1000}
+
+/* bands */
+.bands{position:absolute;inset:0;z-index:5}
+.band{
+  position:absolute;inset-block-start:50%;translate:0 -50%;
+  inline-size:min(46ch,42vw);
+  opacity:0;visibility:hidden;
+  transform:translate3d(0,20px,0);
+  will-change:opacity,transform;
+}
+.band.l{inset-inline-start:var(--rail)}
+.band.r{inset-inline-end:var(--rail);text-align:end}
+/* layer 2 of 4: per-band scrim, deepens only while its band is live */
+.band::before{
+  content:"";position:absolute;inset:-2.2em -3.2em;z-index:-1;pointer-events:none;
+  /* the stops hold near-full alpha well past the ends of the longest line,
+     because the roof in the opening shot is close to white */
+  background:radial-gradient(ellipse at center,
+    rgba(9,11,14,.90) 0%,rgba(9,11,14,.88) 52%,rgba(9,11,14,.60) 76%,rgba(9,11,14,0) 100%);
+  opacity:calc(var(--k,0) * .95);
+}
+.band p{
+  margin:0;font-family:var(--display);font-weight:700;font-stretch:112%;
+  font-size:clamp(1.55rem,3.5vw,3.5rem);line-height:1.06;letter-spacing:-.022em;
+  /* layer 3 of 4: three-layer text shadow */
+  text-shadow:var(--ts);
+}
+.band .mono{
+  display:inline-block;margin-block-end:.9em;
+  /* layer 4 of 4: chip scrim for small text */
+  background:rgba(9,11,14,.66);padding:.42em .8em;border-radius:2px;
+  text-shadow:0 1px 2px rgba(0,0,0,.9);
+}
+
+/* static hero, shown when any of the five gates matches */
+.static-hero{display:none;position:absolute;inset:0;z-index:6;padding:0 var(--rail);
+  align-content:center;justify-items:start;gap:1.1rem}
+/* layer 2 of 4 for this hero, the counterpart to .band::before.
+   The base scrim is deliberately thinnest across the middle, because the
+   scrub hero keeps its words out at the rails. The static hero puts them
+   dead centre, over the lit ceiling strips and the court, so it carries
+   its own band. The plateau runs 14% to 72% because the headline top reaches
+   18.9% in landscape and the lede bottom reaches 66.4%. */
+.static-hero::before{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(to bottom,
+    rgba(9,11,14,0) 0%,rgba(9,11,14,.46) 14%,
+    rgba(9,11,14,.46) 72%,rgba(9,11,14,0) 92%);
+}
+.static-hero h1{font-size:clamp(2rem,8vw,3.6rem);text-shadow:var(--ts);max-inline-size:16ch}
+.static-hero p{margin:0;max-inline-size:38ch;color:var(--text-primary);text-shadow:var(--ts)}
+.scroll-hint{
+  position:absolute;z-index:6;inset-block-end:calc(var(--rail) * .9);inset-inline-start:50%;
+  translate:-50% 0;opacity:.7;animation:bob 2.6s ease-in-out infinite;
+}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+
+/* ── the five static-hero gates ───────────────────────────────── */
+@media (max-width: 720px),
+       (orientation: portrait) and (max-width: 1024px),
+       (orientation: portrait) and (pointer: coarse),
+       (orientation: landscape) and (pointer: coarse) and (max-height: 560px),
+       (prefers-reduced-motion: reduce){
+  .hero{height:100svh}
+  .stage video{display:none}
+  .bands,.descent,.scroll-hint{display:none}
+  .static-hero{display:grid}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+  .descent line{stroke-dashoffset:0 !important}
+  /* Belongs to this query alone, not to the five gates above. Those five
+     swap the scrubbing hero for a still because seeking a 5.5MB video on a
+     phone is a bad trade. That is a decision about the hero. Pinning every
+     scroll entrance on the page to its end state is a decision about motion
+     preference, and it rode along in the same block by accident, so all 29
+     entrances were dead on every phone whether or not the visitor had asked
+     for less motion. The observer still needs this as a floor here, because
+     with transitions at .001ms an element that never intersects would
+     otherwise sit at opacity 0 forever. */
+  .reveal{opacity:1 !important;transform:none !important}
+}
+
+/* ── page sections ────────────────────────────────────────────── */
+main{position:relative;z-index:10;background:var(--canvas)}
+section{padding:clamp(72px,10vh,140px) var(--rail);position:relative}
+.wrap{max-inline-size:1180px;margin-inline:auto}
+.eyebrow{display:block;margin-block-end:1.4em}
+h2{font-size:clamp(1.9rem,4.4vw,3.5rem);max-inline-size:18ch;margin-block-end:.6em}
+.lede{font-size:clamp(1.02rem,1.5vw,1.28rem);color:var(--text-secondary);max-inline-size:56ch;margin:0}
+
+/* arabesque divider */
+.lattice{block-size:64px;inline-size:100%;opacity:.13;color:var(--sand)}
+
+.reveal{opacity:0;transform:translate3d(0,26px,0);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* about */
+#about{background:linear-gradient(to bottom,var(--canvas),#171B22)}
+.split{display:grid;gap:clamp(28px,5vw,72px);grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:start}
+
+/* courts */
+.stats{display:grid;gap:1px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));background:rgba(242,240,234,.09);margin-block-start:clamp(36px,6vh,64px)}
+.stat{background:var(--canvas);padding:clamp(20px,3vw,32px)}
+.stat b{display:block;font-family:var(--display);font-weight:700;font-stretch:112%;font-size:clamp(2rem,4.2vw,3.2rem);line-height:1;color:var(--accent)}
+.stat span{display:block;margin-block-start:.7em;font-size:.86rem;color:var(--text-secondary)}
+
+/* climate dial */
+#climate{background:var(--panel)}
+.dial{margin-block-start:clamp(32px,5vh,56px)}
+.dial-readout{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(242,240,234,.09)}
+.dial-cell{background:var(--panel);padding:clamp(20px,3.4vw,38px);position:relative;overflow:hidden}
+.dial-cell .mono{position:relative;z-index:2}
+.dial-cell .temp{
+  position:relative;z-index:2;display:block;margin-block-start:.3em;
+  font-family:var(--display);font-weight:700;font-stretch:112%;
+  font-size:clamp(3rem,10vw,6.5rem);line-height:1;font-variant-numeric:tabular-nums;
+}
+.dial-cell .temp sup{font-size:.34em;vertical-align:super;margin-inline-start:.08em}
+.dial-cell .heat{
+  position:absolute;inset-block-end:0;inset-inline:0;z-index:1;
+  block-size:0%;transition:block-size .35s cubic-bezier(.16,1,.3,1),background .35s ease;
+}
+#out .temp{color:var(--text-primary)}
+#in .temp{color:var(--accent)}
+#in .heat{background:linear-gradient(to top,rgba(27,79,168,.5),rgba(27,79,168,0));block-size:36%}
+.dial-controls{margin-block-start:clamp(22px,3vh,34px)}
+.months{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;color:var(--text-secondary);margin-block-end:.7em}
+.months span{transition:color .3s ease}
+.months span.on{color:var(--accent)}
+input[type=range]{
+  inline-size:100%;appearance:none;-webkit-appearance:none;background:transparent;margin:0;cursor:grab;
+}
+input[type=range]:active{cursor:grabbing}
+input[type=range]::-webkit-slider-runnable-track{block-size:3px;background:rgba(242,240,234,.2)}
+input[type=range]::-moz-range-track{block-size:3px;background:rgba(242,240,234,.2)}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;inline-size:22px;block-size:22px;margin-block-start:-10px;
+  border-radius:50%;background:var(--accent);border:none;
+}
+input[type=range]::-moz-range-thumb{inline-size:22px;block-size:22px;border-radius:50%;background:var(--accent);border:none}
+input[type=range]:focus-visible{outline:2px solid var(--accent);outline-offset:6px}
+.dial-caption{margin-block-start:1.2em;font-size:.9rem;color:var(--text-secondary)}
+.dial-table{display:none;inline-size:100%;border-collapse:collapse;margin-block-start:1.5em;font-variant-numeric:tabular-nums}
+.dial-table th,.dial-table td{border-block-end:1px solid rgba(242,240,234,.1);padding:.55em .4em;text-align:start;font-size:.88rem}
+.dial-table th{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-secondary);font-weight:400}
+@media (prefers-reduced-motion: reduce){
+  .dial-controls,.dial-readout{display:none}
+  .dial-table{display:table}
+}
+
+/* academy */
+.coaches{display:grid;gap:1px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));background:rgba(242,240,234,.09);margin-block-start:clamp(32px,5vh,56px)}
+.coach{background:var(--canvas);padding:clamp(24px,3.4vw,38px)}
+.coach h3{font-size:clamp(1.2rem,2vw,1.6rem);margin-block-end:.35em}
+.coach .mono{display:block}
+
+/* events */
+.events{display:grid;gap:1px;background:rgba(242,240,234,.09);margin-block-start:clamp(32px,5vh,56px)}
+.event{background:var(--canvas);padding:clamp(22px,3vw,34px);display:grid;gap:.5em 2em;grid-template-columns:minmax(0,10ch) 1fr;align-items:baseline}
+.event .when{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;color:var(--accent)}
+.event h3{font-size:clamp(1.1rem,1.9vw,1.5rem)}
+.event p{margin:.4em 0 0;color:var(--text-secondary);font-size:.94rem;grid-column:2}
+@media (max-width:620px){.event{grid-template-columns:1fr}.event p{grid-column:1}}
+
+/* faq */
+#faq{background:#171B22}
+.faq{margin-block-start:clamp(32px,5vh,56px);border-block-start:1px solid rgba(242,240,234,.12)}
+details{border-block-end:1px solid rgba(242,240,234,.12)}
+summary{
+  cursor:pointer;list-style:none;padding:1.25em 2.5em 1.25em 0;position:relative;
+  font-family:var(--display);font-weight:700;font-stretch:112%;font-size:clamp(1rem,1.6vw,1.28rem);
+}
+summary::-webkit-details-marker{display:none}
+summary::after{
+  content:"";position:absolute;inset-inline-end:.4em;inset-block-start:1.75em;
+  inline-size:11px;block-size:11px;border-inline-end:2px solid var(--accent);border-block-end:2px solid var(--accent);
+  rotate:45deg;transition:rotate .3s ease;
+}
+details[open] summary::after{rotate:225deg}
+details p{margin:0 0 1.6em;color:var(--text-secondary);max-inline-size:62ch}
+
+/* contact */
+.routes{display:grid;gap:1px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));background:rgba(242,240,234,.09);margin-block-start:clamp(32px,5vh,56px)}
+.route{background:var(--canvas);padding:clamp(22px,3vw,32px);text-decoration:none;transition:background .3s ease}
+.route:hover,.route:focus-visible{background:var(--panel)}
+.route b{display:block;font-family:var(--display);font-weight:700;font-stretch:112%;font-size:1.12rem;margin-block-start:.5em}
+.pending{
+  margin-block-start:clamp(28px,4vh,44px);padding:1.1em 1.3em;
+  border-inline-start:2px solid var(--accent);background:var(--accent-muted);
+  font-size:.9rem;color:var(--text-secondary);max-inline-size:62ch;
+}
+
+/* closer */
+#book{background:linear-gradient(160deg,var(--court-deep),var(--canvas) 70%);text-align:center}
+#book h2{margin-inline:auto;max-inline-size:20ch}
+#book .cta{margin-block-start:2.2em;font-size:.82rem;padding:1.05em 2.4em}
+
+footer{padding:clamp(48px,7vh,80px) var(--rail);border-block-start:1px solid rgba(242,240,234,.12);background:#101318}
+.foot{display:grid;gap:clamp(24px,4vw,56px);grid-template-columns:repeat(auto-fit,minmax(200px,1fr));max-inline-size:1180px;margin-inline:auto}
+.foot p{margin:.35em 0;color:var(--text-secondary);font-size:.9rem}
+.foot a{color:var(--text-secondary);text-decoration:none}
+.foot a:hover{color:var(--text-primary)}
+
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.sr{position:absolute;inline-size:1px;block-size:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.skip{position:absolute;inset-block-start:-100px;inset-inline-start:var(--rail);z-index:99;background:var(--accent);color:#0E1013;padding:.7em 1.2em}
+.skip:focus{inset-block-start:8px}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════
+     EVENTS. To add, change, or remove an event, edit ONLY the JSON
+     array below. Nothing else on the page needs touching.
+
+       when   short date label shown in the accent colour
+       title  the event name
+       body   one or two sentences of detail
+
+     Leave the array empty ( [] ) and the whole Events section and
+     its nav link remove themselves from the page automatically.
+     ══════════════════════════════════════════════════════════════ -->
+<script type="application/json" id="events-data">
+[]
+</script>
+<!-- ═════════════════════════ end events data ═══════════════════ -->
+
+<a class="skip" href="#about">Skip to content</a>
+
+<div id="ring" aria-hidden="true">
+  <svg width="52" height="52" viewBox="0 0 52 52">
+    <circle class="track" cx="26" cy="26" r="23"></circle>
+    <circle class="fill" cx="26" cy="26" r="23" stroke-dasharray="144.5" stroke-dashoffset="144.5"></circle>
+  </svg>
+  <b>0%</b>
+</div>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#top">THE D<span>O</span>ME</a>
+  <button class="menu-btn" id="menu-btn" type="button"
+          aria-controls="nav-list" aria-expanded="false" aria-label="Menu">
+    <span></span><span></span>
+  </button>
+  <nav aria-label="Primary">
+    <ul id="nav-list">
+      <li><a href="#about">The club</a></li>
+      <li><a href="#courts">Courts</a></li>
+      <li><a href="#academy">Academy</a></li>
+      <li id="nav-events" hidden><a href="#events">What is on</a></li>
+      <li><a href="#faq">Questions</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="nav-right">
+    <a class="lang" href="/ar" lang="ar" hreflang="ar">العربية</a>
+    <a class="cta" href="#book">Book<span class="cta-long"> a court</span></a>
+  </div>
+</header>
+
+<div id="top"></div>
+
+<section class="hero" id="hero">
+  <div class="stage">
+    <picture>
+      <source srcset="assets/hero-static.jpg" media="(max-width: 720px), (orientation: portrait) and (max-width: 1024px), (orientation: portrait) and (pointer: coarse), (orientation: landscape) and (pointer: coarse) and (max-height: 560px), (prefers-reduced-motion: reduce)">
+      <img class="poster" id="poster" src="assets/poster.jpg" alt="" decoding="async" fetchpriority="high">
+    </picture>
+    <video id="hero-video" muted playsinline preload="none" disablepictureinpicture aria-hidden="true"></video>
+
+    <svg class="descent" preserveAspectRatio="none" viewBox="0 0 2 1000" aria-hidden="true">
+      <line id="descent-line" x1="1" y1="0" x2="1" y2="1000"></line>
+    </svg>
+
+    <div class="bands" aria-hidden="true">
+      <div class="band l" data-from="0.00" data-to="0.28">
+        <span class="mono">Outside</span>
+        <p>In July, Doha reaches 42 degrees.</p>
+      </div>
+      <div class="band r" data-from="0.25" data-to="0.53">
+        <span class="mono">The law</span>
+        <p>From June, the law sends outdoor work home at ten in the morning.</p>
+      </div>
+      <div class="band l" data-from="0.50" data-to="0.78">
+        <p>So the court went under a roof.</p>
+      </div>
+      <div class="band r" data-from="0.75" data-to="1.00">
+        <span class="mono">The Dome</span>
+        <p>Five courts. Cooled and lit, every day of the year.</p>
+      </div>
+    </div>
+
+    <div class="static-hero">
+      <h1>Five courts. One climate you choose.</h1>
+      <p>Indoor padel at Qatar Foundation, Ar-Rayyan. Cooled, lit, and open every day of the year.</p>
+      <a class="cta" href="#book">Book a court</a>
+    </div>
+
+    <svg class="scroll-hint" width="18" height="30" viewBox="0 0 18 30" fill="none" aria-hidden="true">
+      <rect x="1" y="1" width="16" height="28" rx="8" stroke="rgba(242,240,234,.5)" stroke-width="1.5"/>
+      <circle cx="9" cy="9" r="2.2" fill="#C8FF00"/>
+    </svg>
+  </div>
+</section>
+
+<main>
+
+<section id="about">
+  <div class="wrap">
+    <div class="split">
+      <div class="reveal">
+        <span class="mono eyebrow">01 / The club</span>
+        <h2>The building is the argument.</h2>
+      </div>
+      <div class="reveal">
+        <p class="lede">The Dome sits inside Qatar Foundation in Ar-Rayyan. Five courts, one roof, and air that stays the same temperature in August as it does in January. Nothing about playing here depends on the weather.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<svg class="lattice" aria-hidden="true"><rect width="100%" height="100%" fill="url(#arabesque)"/></svg>
+
+<section id="courts">
+  <div class="wrap">
+    <span class="mono eyebrow reveal">02 / The courts</span>
+    <h2 class="reveal">Glass on four sides, so every ball stays in play.</h2>
+    <div class="stats">
+      <div class="stat reveal"><b>5</b><span>Courts, fully enclosed</span></div>
+      <div class="stat reveal"><b>24<sup style="font-size:.4em;vertical-align:super">&deg;</sup></b><span>Inside, every month of the year</span></div>
+      <div class="stat reveal"><b>4</b><span>Players to a court, one price between you</span></div>
+      <div class="stat reveal"><b>1</b><span>Session to become playable</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="climate">
+  <div class="wrap">
+    <span class="mono eyebrow reveal">03 / The reason</span>
+    <h2 class="reveal">Drag through the year. One of these numbers moves.</h2>
+    <div class="dial reveal">
+      <div class="dial-readout">
+        <div class="dial-cell" id="out">
+          <span class="mono">Outside</span>
+          <span class="temp"><span id="out-t">22</span><sup>&deg;</sup></span>
+          <div class="heat" id="out-heat"></div>
+        </div>
+        <div class="dial-cell" id="in">
+          <span class="mono">Inside The Dome</span>
+          <span class="temp"><span id="in-t">24</span><sup>&deg;</sup></span>
+          <div class="heat"></div>
+        </div>
+      </div>
+      <div class="dial-controls">
+        <div class="months" id="months" aria-hidden="true"></div>
+        <label class="sr" for="month">Month of the year</label>
+        <input type="range" id="month" min="1" max="12" step="1" value="1">
+      </div>
+      <p class="dial-caption">Average daily high in Doha, against the temperature held inside the building.</p>
+      <table class="dial-table">
+        <caption class="sr">Average daily high in Doha compared with the temperature inside The Dome</caption>
+        <thead><tr><th scope="col">Month</th><th scope="col">Outside</th><th scope="col">Inside</th></tr></thead>
+        <tbody id="dial-rows"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<svg class="lattice" aria-hidden="true"><rect width="100%" height="100%" fill="url(#arabesque)"/></svg>
+
+<section id="academy">
+  <div class="wrap">
+    <span class="mono eyebrow reveal">04 / The academy</span>
+    <h2 class="reveal">Coaching, in present tense.</h2>
+    <p class="lede reveal">Private and group lessons, for adults and for juniors. Two coaches run the academy.</p>
+    <div class="coaches">
+      <div class="coach reveal">
+        <span class="mono">Coach</span>
+        <h3>Claudia Oses</h3>
+      </div>
+      <div class="coach reveal">
+        <span class="mono">Coach</span>
+        <h3>Edu Franza</h3>
+      </div>
+    </div>
+    <p class="pending reveal"><strong>Placeholder note for the client, remove before launch.</strong> Coach biographies are intentionally blank. The current site runs Lorem Ipsum in both slots. Send the real bios and they drop straight in here.</p>
+  </div>
+</section>
+
+<section id="events" hidden>
+  <div class="wrap">
+    <span class="mono eyebrow reveal">05 / What is on</span>
+    <h2 class="reveal">Coming up at the club.</h2>
+    <div class="events" id="events-list"></div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <span class="mono eyebrow reveal">06 / Questions</span>
+    <h2 class="reveal">The things people ask at the desk.</h2>
+    <div class="faq reveal">
+      <details><summary>Do I need to bring a racket?</summary><p>Rackets and balls are available at the club. Bring court shoes.</p></details>
+      <details><summary>Do I need a partner?</summary><p>Padel is played four to a court. If you are short of players, ask at the desk or post in the club group before you book.</p></details>
+      <details><summary>How do I book?</summary><p>Courts are booked through Playtomic and paid by the court, not per person.</p></details>
+      <details><summary>Is it actually cooled?</summary><p>Yes. The building is fully enclosed and climate controlled, so the court holds around 24 degrees in August.</p></details>
+      <details><summary>I have never played before. Is that a problem?</summary><p>No experience needed. Padel takes about one session to become playable, which is most of the reason it spread this fast.</p></details>
+      <details><summary>Where is it?</summary><p>Inside Qatar Foundation in Ar-Rayyan. Parking is on site.</p></details>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <span class="mono eyebrow reveal">07 / Contact</span>
+    <h2 class="reveal">Come and find us.</h2>
+    <div class="routes">
+      <a class="route reveal" href="https://maps.google.com/?q=The+Dome+Padel+Club+Qatar+Foundation+Ar-Rayyan" target="_blank" rel="noopener">
+        <span class="mono">Where</span><b>Qatar Foundation, Ar-Rayyan</b>
+      </a>
+      <a class="route reveal" href="https://www.instagram.com/thedome.qa/" target="_blank" rel="noopener">
+        <span class="mono">Instagram</span><b>@thedome.qa</b>
+      </a>
+      <a class="route reveal" href="#book">
+        <span class="mono">Booking</span><b>Playtomic</b>
+      </a>
+    </div>
+    <p class="pending reveal"><strong>Placeholder note for the client, remove before launch.</strong> Opening hours, phone number, and email are intentionally blank rather than invented. Send them and they drop straight in here. The theme vendor's social accounts that appear on the current contact page have been removed.</p>
+  </div>
+</section>
+
+<section id="book">
+  <div class="wrap">
+    <span class="mono eyebrow reveal">08 / Book</span>
+    <h2 class="reveal">It is 42 degrees outside. Play anyway.</h2>
+    <a class="cta reveal" href="https://playtomic.com/" target="_blank" rel="noopener">Book on Playtomic</a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="foot">
+    <div>
+      <span class="mono">The Dome Padel Club</span>
+      <p>Qatar Foundation<br>Ar-Rayyan, Qatar</p>
+    </div>
+    <div>
+      <span class="mono">Hours</span>
+      <p>To be confirmed by the club.</p>
+    </div>
+    <div>
+      <span class="mono">Language</span>
+      <p><a href="/">English</a><br><a href="/ar" lang="ar" hreflang="ar">العربية</a></p>
+    </div>
+    <div>
+      <span class="mono">Follow</span>
+      <p><a href="https://www.instagram.com/thedome.qa/" target="_blank" rel="noopener">Instagram</a></p>
+    </div>
+  </div>
+</footer>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <pattern id="arabesque" width="60" height="52" patternUnits="userSpaceOnUse">
+    <g fill="none" stroke="currentColor" stroke-width="1.4">
+      <path d="M30 0 L45 13 L45 39 L30 52 L15 39 L15 13 Z"/>
+      <path d="M0 13 L15 0 M45 0 L60 13 M0 39 L15 52 M45 52 L60 39"/>
+      <path d="M30 13 L37.5 19.5 L37.5 32.5 L30 39 L22.5 32.5 L22.5 19.5 Z"/>
+    </g>
+  </pattern>
+</defs></svg>
+
+<script>
+(function(){
+"use strict";
+
+/* ── the five static-hero gates, matched character for character
+      against the CSS media query block above ─────────────────── */
+var GATES = [
+  "(max-width: 720px)",
+  "(orientation: portrait) and (max-width: 1024px)",
+  "(orientation: portrait) and (pointer: coarse)",
+  "(orientation: landscape) and (pointer: coarse) and (max-height: 560px)",
+  "(prefers-reduced-motion: reduce)"
+];
+var mqls = GATES.map(function(q){ return window.matchMedia(q); });
+function staticHero(){ return mqls.some(function(m){ return m.matches; }); }
+
+/* ── nav solidity ─────────────────────────────────────────────── */
+var nav = document.getElementById("nav"), navSolid = false;
+
+/* ── the mobile menu ──────────────────────────────────────────── */
+(function(){
+  var btn = document.getElementById("menu-btn");
+  function set(open){
+    nav.dataset.menu = open ? "open" : "shut";
+    btn.setAttribute("aria-expanded", String(open));
+  }
+  btn.addEventListener("click", function(){ set(nav.dataset.menu !== "open"); });
+  /* Every item is an in-page anchor, so the panel has to get out of the
+     way itself. Nothing navigates away to close it. */
+  document.getElementById("nav-list").addEventListener("click", function(e){
+    if(e.target.closest("a")) set(false);
+  });
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape" && nav.dataset.menu === "open"){ set(false); btn.focus(); }
+  });
+  /* The panel covers the top of the page, so a tap on what it is covering
+     is a request to dismiss it. Runs after the button's own handler, and
+     the button is inside nav, so opening does not immediately close. */
+  document.addEventListener("click", function(e){
+    if(nav.dataset.menu === "open" && !nav.contains(e.target)) set(false);
+  });
+  /* Rotating a phone can bring the desktop row back while the panel is
+     flagged open, which would strand aria-expanded="true" on a button
+     that is no longer displayed. */
+  window.matchMedia("(min-width:901px)").addEventListener("change", function(e){
+    if(e.matches) set(false);
+  });
+  set(false);
+})();
+
+/* ── reveals ──────────────────────────────────────────────────── */
+var io = new IntersectionObserver(function(es){
+  es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } });
+}, { rootMargin: "0px 0px -12% 0px", threshold: 0.08 });
+document.querySelectorAll(".reveal").forEach(function(el){ io.observe(el); });
+
+/* ── events, read from the JSON array at the top of the file ──── */
+(function(){
+  var list = [];
+  try { list = JSON.parse(document.getElementById("events-data").textContent) || []; }
+  catch(e){ list = []; }
+  if(!Array.isArray(list) || list.length === 0) return;
+
+  var sec = document.getElementById("events"),
+      host = document.getElementById("events-list"),
+      frag = document.createDocumentFragment();
+
+  list.forEach(function(ev){
+    var card = document.createElement("article");
+    card.className = "event reveal";
+    var when = document.createElement("span"); when.className = "when"; when.textContent = ev.when || "";
+    var h = document.createElement("h3"); h.textContent = ev.title || "";
+    card.appendChild(when); card.appendChild(h);
+    if(ev.body){ var p = document.createElement("p"); p.textContent = ev.body; card.appendChild(p); }
+    frag.appendChild(card);
+    io.observe(card);
+  });
+
+  host.appendChild(frag);
+  sec.hidden = false;
+  document.getElementById("nav-events").hidden = false;
+})();
+
+/* ── section numbers, counted over what is actually on the page ── */
+/* Events is the one section that comes and goes with its array, so the
+   labels are numbered after that decision. Hard-coded numbers would read
+   04, 06, 07 to anyone visiting while the array is empty. */
+(function(){
+  var n = 0;
+  [].forEach.call(document.querySelectorAll("section .eyebrow"), function(el){
+    if(el.closest("section").hidden) return;
+    n++;
+    el.textContent = el.textContent.replace(/^\s*\d+/, n < 10 ? "0" + n : String(n));
+  });
+})();
+
+/* ── the climate dial ─────────────────────────────────────────── */
+(function(){
+  var OUT = [22,24,28,33,39,42,42,42,39,35,30,25],
+      INSIDE = 24,
+      NAMES = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+      /* the tick strip is its own list: initials only read as months in a
+         language that abbreviates that way, and Arabic does not */
+      TICKS = ["J","F","M","A","M","J","J","A","S","O","N","D"],
+      slider = document.getElementById("month"),
+      outT = document.getElementById("out-t"),
+      inT = document.getElementById("in-t"),
+      heat = document.getElementById("out-heat"),
+      monthsEl = document.getElementById("months"),
+      rows = document.getElementById("dial-rows"),
+      lastMonth = -1;
+
+  NAMES.forEach(function(n,i){
+    var s = document.createElement("span"); s.textContent = TICKS[i]; s.dataset.i = i; monthsEl.appendChild(s);
+    var tr = document.createElement("tr");
+    tr.innerHTML = "<td>" + n + "</td><td>" + OUT[i] + "&deg;</td><td>" + INSIDE + "&deg;</td>";
+    rows.appendChild(tr);
+  });
+  var monthSpans = monthsEl.children;
+
+  function paint(){
+    var i = (slider.value | 0) - 1;
+    if(i === lastMonth) return;          /* delta gate: no DOM write unless it changed */
+    lastMonth = i;
+    var t = OUT[i];
+    outT.textContent = t;
+    inT.textContent = INSIDE;
+    var f = Math.max(0, Math.min(1, (t - 18) / 26));
+    heat.style.blockSize = (f * 100).toFixed(1) + "%";
+    heat.style.background = "linear-gradient(to top, rgba(" +
+      Math.round(120 + f * 100) + "," + Math.round(70 - f * 50) + ",20," + (0.30 + f * 0.5).toFixed(2) +
+      "), rgba(200,80,20,0))";
+    for(var k = 0; k < monthSpans.length; k++) monthSpans[k].classList.toggle("on", k === i);
+  }
+  slider.addEventListener("input", paint);
+  paint();
+})();
+
+/* ── the scrub hero ───────────────────────────────────────────── */
+(function(){
+  var hero = document.getElementById("hero"),
+      video = document.getElementById("hero-video"),
+      poster = document.getElementById("poster"),
+      ring = document.getElementById("ring"),
+      ringFill = ring.querySelector(".fill"),
+      ringText = ring.querySelector("b"),
+      line = document.getElementById("descent-line"),
+      bands = Array.prototype.slice.call(document.querySelectorAll(".band")),
+      RING_C = 144.5;
+
+  bands.forEach(function(b, i){
+    b.from = parseFloat(b.dataset.from);
+    b.to = parseFloat(b.dataset.to);
+    /* the journey opens with text already settled and lands the same way */
+    b.noIn = i === 0;
+    b.noOut = i === bands.length - 1;
+    b.lastK = -1;
+    b.live = false;
+  });
+
+  function smoothstep(p, e0, e1){
+    var t = Math.min(1, Math.max(0, (p - e0) / (e1 - e0)));
+    return t * t * (3 - 2 * t);
+  }
+
+  /* 20vh of eased ramp, in progress units of whatever the scroll range is */
+  function ramp(){
+    var span = hero.offsetHeight - window.innerHeight;
+    return span > 0 ? 0.2 * window.innerHeight / span : 0.04;
+  }
+
+  var target = 0, shown = 0, last = 0, raf = 0,
+      duration = 0, ready = false,
+      seekBusy = false, pending = null,
+      lastLine = -1, loadStarted = false, blobUrl = null;
+
+  function progress(){
+    var r = hero.getBoundingClientRect(),
+        span = hero.offsetHeight - window.innerHeight;
+    if(span <= 0) return 0;
+    return Math.max(0, Math.min(1, -r.top / span));
+  }
+
+  /* Blob fetch. Many static hosts answer Range requests with the whole
+     file, which clamps every seek to zero. Holding the bytes locally is
+     the only reliable way to scrub. */
+  function load(){
+    if(loadStarted) return;
+    loadStarted = true;
+
+    fetch("assets/hero.mp4").then(function(res){
+      if(!res.ok) throw new Error(res.status);
+      var total = parseInt(res.headers.get("content-length") || "0", 10);
+      if(!res.body || !total){ return res.blob(); }
+
+      if(total > 3 * 1024 * 1024) ring.classList.add("on");
+
+      var reader = res.body.getReader(), chunks = [], got = 0;
+      return (function pump(){
+        return reader.read().then(function(r){
+          if(r.done) return new Blob(chunks, { type: "video/mp4" });
+          chunks.push(r.value);
+          got += r.value.length;
+          var f = got / total;
+          ringFill.setAttribute("stroke-dashoffset", (RING_C * (1 - f)).toFixed(1));
+          ringText.textContent = Math.round(f * 100) + "%";
+          return pump();
+        });
+      })();
+    }).then(function(blob){
+      blobUrl = URL.createObjectURL(blob);
+      video.src = blobUrl;
+      video.load();
+    }).catch(function(){
+      /* the page is complete without the video: the poster stays,
+         the bands keep running on scroll progress alone */
+      ring.classList.remove("on");
+    });
+  }
+
+  video.addEventListener("loadedmetadata", function(){
+    duration = video.duration || 0;
+    ready = duration > 0;
+    ring.classList.remove("on");
+    video.classList.add("ready");
+    seek(shown * duration);
+  });
+  video.addEventListener("seeked", function(){
+    seekBusy = false;
+    if(pending !== null){ var t = pending; pending = null; seek(t); }
+  });
+  video.addEventListener("error", function(){
+    /* without this the gate deadlocks and the video freezes on frame one */
+    seekBusy = false; pending = null; ready = false;
+    ring.classList.remove("on");
+  });
+
+  function seek(t){
+    if(!ready) return;
+    t = Math.max(0, Math.min(duration - 0.02, t));
+    /* a seek to where the head already sits never fires `seeked`, which
+       would latch seekBusy true and jam every later seek behind it */
+    if(Math.abs(video.currentTime - t) < 0.004) return;
+    if(seekBusy){ pending = t; return; }   /* coalesce to the newest request */
+    seekBusy = true;
+    try { video.currentTime = t; } catch(e){ seekBusy = false; }
+  }
+
+  function frame(now){
+    var dt = last ? Math.min(now - last, 64) : 16.667;
+    last = now;
+
+    /* frame-rate independent easing: same feel at 60Hz and 120Hz */
+    shown += (target - shown) * (1 - Math.pow(1 - 0.16, dt / 16.667));
+    if(Math.abs(target - shown) < 0.0002) shown = target;
+
+    if(ready) seek(shown * duration);
+
+    var lineOff = Math.round(1000 * (1 - shown));
+    if(lineOff !== lastLine){ line.style.strokeDashoffset = lineOff; lastLine = lineOff; }
+
+    var f0 = ramp();
+    for(var i = 0; i < bands.length; i++){
+      var b = bands[i], k;
+      if(shown < b.from || shown > b.to){ k = 0; }
+      else {
+        var f = Math.min(f0, (b.to - b.from) / 3);
+        k = (b.noIn ? 1 : smoothstep(shown, b.from, b.from + f)) *
+            (b.noOut ? 1 : 1 - smoothstep(shown, b.to - f, b.to));
+      }
+      var kr = Math.round(k * 100) / 100;
+      if(kr === b.lastK) continue;        /* delta gate: skip untouched bands */
+      b.lastK = kr;
+      b.style.opacity = kr;
+      b.style.setProperty("--k", kr);     /* the per-band scrim rides this */
+      b.style.transform = "translate3d(0," + ((1 - kr) * 20).toFixed(1) + "px,0)";
+      var vis = kr > 0.01;
+      if(vis !== b.live){ b.live = vis; b.style.visibility = vis ? "visible" : "hidden"; }
+    }
+
+    if(shown !== target) raf = requestAnimationFrame(frame);
+    else raf = 0;
+  }
+
+  function kick(){
+    if(!raf){ last = 0; raf = requestAnimationFrame(frame); }
+  }
+
+  function onScroll(){
+    var solid = window.scrollY > window.innerHeight * 0.6;
+    if(solid !== navSolid){ navSolid = solid; nav.classList.toggle("solid", solid); }
+    if(staticHero()) return;
+    target = progress();
+    if(!loadStarted && target >= 0) load();
+    kick();
+  }
+
+  function apply(){
+    if(staticHero()){
+      if(raf){ cancelAnimationFrame(raf); raf = 0; }
+      video.removeAttribute("src");
+      video.load();
+      /* dropping the source invalidates the seek gate along with it */
+      ready = false; seekBusy = false; pending = null;
+      ring.classList.remove("on");
+      return;
+    }
+    if(!loadStarted) load();
+    /* rotating back into the scrub hero: the bytes are still in memory, so
+       reattach them. Re-running load() would be blocked by loadStarted and
+       leave the hero without a video for the rest of the session. */
+    else if(blobUrl && !video.getAttribute("src")){ video.src = blobUrl; video.load(); }
+    target = progress();
+    kick();
+  }
+
+  /* live gate switching: a phone rotating into landscape must get the
+     scrub hero without a reload, and back again */
+  mqls.forEach(function(m){
+    if(m.addEventListener) m.addEventListener("change", apply);
+    else m.addListener(apply);
+  });
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", function(){ target = progress(); kick(); }, { passive: true });
+  apply();
+  onScroll();
+})();
+
+})();
+</script>
+</body>
+</html>
