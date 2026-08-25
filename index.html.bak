@@ -7,6 +7,10 @@
 <meta name="description" content="Five indoor padel courts at Qatar Foundation, Ar-Rayyan. Cooled, lit, and open every day of the year. Book by the court on Playtomic.">
 <meta name="theme-color" content="#14161A">
 
+<link rel="canonical" href="https://thedome.qa/">
+<link rel="alternate" hreflang="en" href="https://thedome.qa/">
+<link rel="alternate" hreflang="ar" href="https://thedome.qa/ar">
+<link rel="alternate" hreflang="x-default" href="https://thedome.qa/">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="The Dome Padel Club">
@@ -15,8 +19,8 @@
 <meta property="og:locale" content="en">
 <meta property="og:locale:alternate" content="ar">
 <!-- DEPLOY STEP: replace both absolute URLs below with the live origin before zipping -->
-<meta property="og:url" content="https://abdallahdarwazeh.github.io/TheDome/">
-<meta property="og:image" content="https://abdallahdarwazeh.github.io/TheDome/assets/poster.jpg">
+<meta property="og:url" content="https://thedome.qa/">
+<meta property="og:image" content="https://thedome.qa/assets/poster.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -426,6 +430,7 @@ footer{padding:clamp(48px,7vh,80px) var(--rail);border-block-start:1px solid rgb
     </ul>
   </nav>
   <div class="nav-right">
+    <a class="lang" href="/ar" lang="ar" hreflang="ar">العربية</a>
     <a class="cta" href="#book">Book<span class="cta-long"> a court</span></a>
   </div>
 </header>
@@ -555,6 +560,7 @@ footer{padding:clamp(48px,7vh,80px) var(--rail);border-block-start:1px solid rgb
         <h3>Edu Franza</h3>
       </div>
     </div>
+    <p class="pending reveal"><strong>Placeholder note for the client, remove before launch.</strong> Coach biographies are intentionally blank. The current site runs Lorem Ipsum in both slots. Send the real bios and they drop straight in here.</p>
   </div>
 </section>
 
@@ -596,6 +602,7 @@ footer{padding:clamp(48px,7vh,80px) var(--rail);border-block-start:1px solid rgb
         <span class="mono">Booking</span><b>Playtomic</b>
       </a>
     </div>
+    <p class="pending reveal"><strong>Placeholder note for the client, remove before launch.</strong> Opening hours, phone number, and email are intentionally blank rather than invented. Send them and they drop straight in here. The theme vendor's social accounts that appear on the current contact page have been removed.</p>
   </div>
 </section>
 
@@ -621,14 +628,13 @@ footer{padding:clamp(48px,7vh,80px) var(--rail);border-block-start:1px solid rgb
     </div>
     <div>
       <span class="mono">Language</span>
-      <p><a href="/TheDome/">English</a></p>
+      <p><a href="/">English</a><br><a href="/ar" lang="ar" hreflang="ar">العربية</a></p>
     </div>
     <div>
       <span class="mono">Follow</span>
       <p><a href="https://www.instagram.com/thedome.qa/" target="_blank" rel="noopener">Instagram</a></p>
     </div>
   </div>
-      <p style="opacity:.55;font-size:.78rem;margin-top:1.5rem">Concept redesign by Upscale Qatar &mdash; not affiliated with The Dome Padel Club. <span lang="ar">&#1578;&#1589;&#1605;&#1610;&#1605; &#1605;&#1602;&#1578;&#1585;&#1581;&#1548; &#1594;&#1610;&#1585; &#1578;&#1575;&#1576;&#1593; &#1604;&#1604;&#1606;&#1575;&#1583;&#1610;.</span></p>
 </footer>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
